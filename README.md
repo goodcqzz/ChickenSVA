@@ -39,4 +39,4 @@ Chicken SV Knowlegde Agent/Atlas/Analysis (ChickenSVA)
 ---
 
 ## 🚀 ChickenSVA online access
-http://chickensv.henau.edu.cn
+Under review, detailed URL of the manuscript: Supplementary_S1(ChickenSVA_Readme)
