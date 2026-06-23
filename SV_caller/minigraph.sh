@@ -76,7 +76,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
         # Step 5: Deconstruct variants to VCF
         vg deconstruct "${id}.giraffe.gbz" \
             -r "${id}.snarls" -a \
-            > "${id}.vg48.vcf"
+            > "${id}.vg.vcf"
 
         # Step 6: Collect VCF
         ln -sf "${sample_dir}/${id}.vg48.vcf" "${VCF_DIR}/"
