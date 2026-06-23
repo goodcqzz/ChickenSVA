@@ -39,4 +39,4 @@ Chicken SV Knowlegde Agent/Atlas/Analysis (ChickenSVA)
 ---
 
 ## 🚀 ChickenSVA online access
-Under review, detailed URL of the manuscript: Supplementary_S1(ChickenSVA_Readme)
+Under review; see the Supplementary_S1 (ChickenSVA_Readme).docx file in the manuscript for the detailed URL.
