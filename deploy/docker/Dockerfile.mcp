@@ -2,7 +2,10 @@
 FROM python:3.11-slim
 
 # bcftools/tabix：SV 处理；default-jre-headless：Beagle 运行时
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# 使用清华镜像加速 Debian 源（deb.debian.org 在部分网络下极不稳定）
+RUN sed -i 's|deb.debian.org|mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list 2>/dev/null || true
+
+RUN apt-get update && apt-get install -y --no-install-recommends -o Acquire::Retries=5 \
         bcftools tabix default-jre-headless curl \
     && rm -rf /var/lib/apt/lists/*
 
