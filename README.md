@@ -7,7 +7,7 @@
 
 ChickenSVA combines a **Comprehensive Chicken Reference Panel (CCRP, 2,063 genomes across 78 global populations)** with an **LLM-driven agent** that lets researchers query, impute, and interpret chicken structural variants (SVs) through natural language — no scripting required.
 
-> **Online platform.** ChickenSVA is also operated as a hosted web service requiring no installation or API key. The service URL is provided to journal reviewers during peer review and will be added here upon publication. This repository serves users who want to (i) inspect/reproduce the methods, (ii) deploy locally, or (iii) build on the agent framework. 中文说明见 [README.zh-CN.md](README.zh-CN.md)。
+> **Online platform + reusable framework.** ChickenSVA is also operated as a hosted web service requiring no installation or API key (service URL is provided to journal reviewers during peer review and will be added here upon publication). This repository serves users who want to (i) inspect/reproduce the methods, (ii) deploy the platform locally, and (iii) **reuse the agent framework with their own data** — the bundled CCRP data layer is swappable, see [Adapting ChickenSVA to your own data](#adapting-chickensva-to-your-own-data). 中文说明见 [README.zh-CN.md](README.zh-CN.md)。
 
 ---
 
@@ -140,6 +140,27 @@ bash run_demo.sh     # SV query + annotation + a toy imputation, end-to-end
 ```
 
 See `examples/README.md` for inputs and expected outputs.
+
+## Adapting ChickenSVA to your own data
+
+The agent and tool layers are organism-agnostic; the framework can host your own
+variant catalog instead of the bundled CCRP:
+
+- **SV frequency table** — replace `data/2063_SV_frq.csv` (or point the
+  `SV_DB_CSV_PATH` environment variable at your file). Columns: `ID, Chr, POS,
+  End, REF, ALT, SV_Type, Region, Gene, Mean_fre`, followed by one frequency
+  column per population (see the bundled file or `examples/data/sv_freq_mini.csv`
+  for the schema).
+- **Phenotype table** — a population-level CSV in `data/` (schema as in
+  `examples/data/phenotype_breeds_2024.csv`).
+- **Genome annotation** — place your GFF3 under `annotation/`; the MCP server
+  looks for `<assembly>.gff3` there (adjust the path in `mcp/mcp_http_server.py`
+  if you use a different file name).
+- **Imputation reference panel** — an indexed VCF plus `beagle.jar` under
+  `refpanel/` (see the imputation workbench docs).
+
+Users keep their data and their own LLM API keys entirely on their own
+infrastructure — nothing is uploaded to any external service.
 
 ## Data bundled vs. full data release
 
