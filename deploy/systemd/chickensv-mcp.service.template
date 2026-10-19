@@ -1,0 +1,26 @@
+[Unit]
+Description=ChickenSV MCP (Conda gaoai)
+After=network.target
+
+[Service]
+Type=simple
+User=@@RUN_USER@@
+Group=@@RUN_GROUP@@
+WorkingDirectory=@@MCP_DIR@@
+Environment=CHICKENSV_ROOT=@@CHICKENSV_ROOT@@
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-@@CHICKENSV_ROOT@@/config/chickensv.env
+ExecStart=@@DEPLOY_DIR@@/bin/run-mcp.sh
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=60
+# 安全加固（Beagle/bcftools 需读写工作区，故仅 ReadWritePaths 放行项目目录）
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+ReadWritePaths=@@CHICKENSV_ROOT@@
+
+[Install]
+WantedBy=multi-user.target

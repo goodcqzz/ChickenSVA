@@ -1,0 +1,58 @@
+# ChickenSVA 一键部署：web(9800) ← backend(9801) ← mcp(9802)
+#
+# 使用：
+#   cp config/chickensv.env.example config/chickensv.env   # 填入 LLM API Key
+#   docker compose up -d --build
+#   打开 http://127.0.0.1:9800
+#
+# 数据挂载：
+#   backend-data  会话/LLM配置等运行时状态（agent_framework/backend/data）
+#   workspaces    填充工作区上传文件（agent_framework/data）
+#   如需 SV 填充：下载 beagle.jar 放到 refpanel/ 并取消下方挂载注释，
+#   全量参考面板 VCF 放入 refpanel/ 后同样挂载。
+
+services:
+  mcp:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.mcp
+    restart: unless-stopped
+    volumes:
+      - workspaces:/srv/chickensv/agent_framework/data
+      # - ./refpanel/beagle.jar:/srv/chickensv/refpanel/beagle.jar:ro
+      # - ./refpanel/<panel>.vcf.gz:/srv/chickensv/refpanel/:ro
+    expose:
+      - "9802"
+
+  backend:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.backend
+    restart: unless-stopped
+    env_file:
+      - config/chickensv.env
+    environment:
+      # 容器网络内经服务名访问 MCP（覆盖 env 文件里的 127.0.0.1）
+      MCP_SERVER_URL: http://mcp:9802
+      HOST: 0.0.0.0
+      PORT: "9801"
+    volumes:
+      - backend-data:/srv/chickensv/agent_framework/backend/data
+    depends_on:
+      - mcp
+    expose:
+      - "9801"
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.web
+    restart: unless-stopped
+    ports:
+      - "9800:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend-data:
+  workspaces:

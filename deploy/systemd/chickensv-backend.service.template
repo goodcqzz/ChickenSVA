@@ -1,0 +1,30 @@
+[Unit]
+Description=ChickenSV Backend (Conda gaoai)
+After=network.target chickensv-mcp.service
+Wants=chickensv-mcp.service
+
+[Service]
+Type=simple
+User=@@RUN_USER@@
+Group=@@RUN_GROUP@@
+WorkingDirectory=@@BE_DIR@@
+Environment=CHICKENSV_ROOT=@@CHICKENSV_ROOT@@
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-@@CHICKENSV_ROOT@@/config/chickensv.env
+Environment=RELOAD=false
+# 多 worker 默认 1；前端无认证时谨慎调大（见 run-backend.sh 安全提示）
+Environment=WORKERS=1
+ExecStart=@@DEPLOY_DIR@@/bin/run-backend.sh
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=60
+# 安全加固（项目位于 /home 下，故不启用 ProtectHome，避免阻断数据/日志写入）
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+ReadWritePaths=@@CHICKENSV_ROOT@@
+
+[Install]
+WantedBy=multi-user.target

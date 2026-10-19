@@ -1,0 +1,16 @@
+# 可选：从 gaoai 导出环境（网络差时不必在线 conda-forge）
+# 日常只需: bash agent_framework/deploy/setup-env.sh  （pip 补依赖）
+#
+# 导出（开发机）:
+#   conda env export -n gaoai > config/gaoai-env-lock.yml
+#
+# 安置机离线还原（慎用，体积大）:
+#   rsync -avP ~/miniconda3/envs/gaoai/ user@host:~/miniconda3/envs/gaoai/
+
+name: gaoai
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - pip

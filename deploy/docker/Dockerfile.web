@@ -1,0 +1,12 @@
+# ChickenSVA 前端 + 网关：Node 构建阶段 → Nginx 服务静态文件并反代 API/WS
+FROM node:20-alpine AS build
+WORKDIR /src
+COPY agent_framework/frontend/package*.json ./
+RUN npm ci
+COPY agent_framework/frontend/ ./
+RUN npm run build
+
+FROM nginx:1.27-alpine
+COPY --from=build /src/dist/ /usr/share/nginx/html/
+COPY deploy/docker/nginx-web.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80

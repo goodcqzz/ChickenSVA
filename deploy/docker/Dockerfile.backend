@@ -1,0 +1,24 @@
+# ChickenSVA FastAPI 后端（Agent 编排 / WebSocket / REST API）
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /srv/chickensv
+COPY agent_framework/backend/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# 后端按生产目录布局需要仓库内的提示词/数据模块等
+COPY agent_framework/backend/ /srv/chickensv/agent_framework/backend/
+COPY agent_framework/frontend/src/prompts/ /srv/chickensv/agent_framework/frontend/src/prompts/
+COPY config/ /srv/chickensv/config/
+COPY data/ /srv/chickensv/data/
+COPY annotation/ /srv/chickensv/annotation/
+
+WORKDIR /srv/chickensv/agent_framework/backend
+EXPOSE 9801
+ENV PYTHONUNBUFFERED=1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
+    CMD curl -sf http://127.0.0.1:9801/api/v1/health || exit 1
+# 单 worker：限速/配额为进程内状态（见 deploy/bin/run-backend.sh 注释）
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "9801", "--workers", "1"]

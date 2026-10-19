@@ -1,0 +1,20 @@
+# Docker 构建上下文瘦身：排除大数据、运行时与本地产物
+.git/
+**/__pycache__/
+**/*.pyc
+node_modules/
+agent_framework/frontend/dist/
+agent_framework/backend/data/
+agent_framework/data/
+agent_framework/logs/
+logs/
+refpanel/*.vcf.gz
+refpanel/*.tbi
+refpanel/beagle.jar
+annotation/*.gff3
+annotation/*.gff3.*
+examples/data/
+.cleanup-backup/
+*.bak-*
+config/chickensv.env
+nohup.out

@@ -1,0 +1,23 @@
+[0;36m检测到系统 Nginx 已对外，默认只重启 MCP + 后端（不碰反代）[0m
+  若要开发热更新: bash start.sh --dev    仅看状态: bash start.sh --status
+[0;36m  鸡基因组智能体 - 启动 (backend)[0m  根目录: /home/xcpubantu/ProjectAi3
+  端口: 对外 9800(脚本备用) / 80(学校反代，不动) | 后端 9801 | MCP 9802
+[0;34m[1/2] MCP :9802[0m
+OK MCP
+[0;32m  ✓ MCP[0m
+[0;34m[2/2] Backend :9801[0m
+OK Backend
+[0;32m  ✓ Backend[0m
+
+[0;32m后端已后台就绪。系统 Nginx / 学校反代未改动。[0m
+  停止应用: bash /home/xcpubantu/ProjectAi3/stop.sh     状态: bash /home/xcpubantu/ProjectAi3/start.sh --status
+[0;36mChickenSV 运行状态[0m  根目录: /home/xcpubantu/ProjectAi3
+  端口约定: 对外入口 80(学校反代) / 9800(备用) | 后端 9801 | MCP 9802
+
+  [0;32m✓ MCP[0m  :9802  healthy
+  [0;32m✓ Backend[0m  :9801  healthy
+  [0;32m✓ Nginx[0m     :80   系统服务运行中（学校反代入口，start/stop 不会动它）
+  [0;34m○ 备用入口[0m  :9800  空闲
+
+  systemd: chickensv-mcp=inactive  chickensv-backend=inactive
+  [1;33m说明: unit 已安装但当前未由 systemd 拉起（多半是 nohup 在跑）。开机后 systemd 会自动拉起。[0m

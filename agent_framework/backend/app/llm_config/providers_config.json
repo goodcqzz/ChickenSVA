@@ -1,0 +1,27 @@
+{
+  "openai": {
+    "api_key_env": "OPENAI_API_KEY",
+    "default_model": "gpt-4o",
+    "note": "OpenAI 官方 API"
+  },
+  "qwen": {
+    "api_key_env": "DASHSCOPE_API_KEY",
+    "default_model": "qwen-max",
+    "note": "阿里云百炼 / DashScope"
+  },
+  "kimi": {
+    "api_key_env": "MOONSHOT_API_KEY",
+    "default_model": "moonshot-v1-8k",
+    "note": "Moonshot AI / Kimi"
+  },
+  "deepseek": {
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "default_model": "deepseek-v4-flash",
+    "note": "DeepSeek API（平台默认）"
+  },
+  "claude": {
+    "api_key_env": "ANTHROPIC_API_KEY",
+    "default_model": "claude-3-5-sonnet-20241022",
+    "note": "Anthropic Claude（建议通过 OpenAI-compatible 代理使用，或配置正确的 base_url）"
+  }
+}

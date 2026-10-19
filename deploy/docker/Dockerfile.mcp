@@ -1,0 +1,24 @@
+# ChickenSVA MCP 工具服务（生信工具 + Beagle 填充）
+FROM python:3.11-slim
+
+# bcftools/tabix：SV 处理；default-jre-headless：Beagle 运行时
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        bcftools tabix default-jre-headless curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /srv/chickensv
+COPY mcp/requirements.txt /srv/chickensv/mcp/requirements.txt
+RUN pip install --no-cache-dir -r mcp/requirements.txt
+
+COPY mcp/ /srv/chickensv/mcp/
+COPY data/ /srv/chickensv/data/
+COPY annotation/ /srv/chickensv/annotation/
+COPY refpanel/*.py /srv/chickensv/refpanel/
+# beagle.jar 不随镜像分发（第三方许可）；挂载到 /srv/chickensv/refpanel/beagle.jar
+# 或构建前自行下载（见 README "Full data release"）
+
+WORKDIR /srv/chickensv/mcp
+EXPOSE 9802
+ENV PYTHONUNBUFFERED=1
+# 与生产 run-mcp.sh 一致：gunicorn 拉起 Flask 服务
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:9802", "--timeout", "600", "mcp_http_server:app"]

@@ -1,0 +1,31 @@
+{
+  "name": "agent-framework-frontend",
+  "version": "1.0.0",
+  "description": "鸡基因组智能体框架前端",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.ts,.tsx --fix"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.0",
+    "axios": "^1.6.0",
+    "element-plus": "^2.5.0",
+    "pinia": "^2.1.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.19.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vue-tsc": "^2.2.0"
+  }
+}

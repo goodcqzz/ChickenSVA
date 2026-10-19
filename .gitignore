@@ -1,0 +1,84 @@
+# =============================================================================
+# ChickenSV / ProjectAi3 — 根目录 .gitignore
+# 目标：不将敏感配置、运行时产物、大体积数据、构建产物提交到 Git
+# =============================================================================
+
+# 备份目录（本机清理前生成的压缩备份）
+.cleanup-backup/
+
+# 敏感配置
+config/chickensv.env
+.env
+.env.local
+.env.*.local
+
+# 运行时文件
+*.pid
+*.log
+logs/
+agent_framework/logs/
+
+# Python 字节码
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 数据库与运行时状态
+*.db
+*.sqlite3
+.enc_key
+agent_framework/backend/data/
+agent_framework/data/.session_workspaces.json
+
+# 工作区运行时数据
+agent_framework/data/ws_*/
+agent_framework/workspace/
+
+# 前端构建产物
+agent_framework/frontend/dist/
+agent_framework/frontend/node_modules/
+agent_framework/frontend/.vite/
+agent_framework/frontend/tsconfig.node.tsbuildinfo
+
+# 大体积 / 受许可限制的数据文件（代码中按相对路径读取，需自行准备）
+refpanel/*.vcf.gz
+refpanel/*.tbi
+refpanel/beagle.jar
+annotation/*.gff3
+data/*.csv
+data/*.tsv
+gwas_body_weight_all.tsv
+
+# 上传/输出临时目录
+data/outputs/
+data/uploads/
+logs/uploads/
+logs/imputation/
+
+# 虚拟环境与 IDE
+venv/
+env/
+ENV/
+.venv/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 测试与覆盖率
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# 部署回滚备份（2026-09-26 模型配置修复）
+agent_framework/frontend/dist.bak-*/
+*.bak-2026*
+examples/beagle.jar

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# ChickenSV 端口块。
+#
+# 现网（高校反代）:
+#   80          = 系统 Nginx（ChickenSV 静态页 + /api /ws），学校反代指这里；start/stop 永不杀
+#   9800        = 开发 Vite / 无 Nginx 时的备用入口（serve-proxy）
+#   9801        = FastAPI 后端（仅 127.0.0.1）
+#   9802        = MCP（仅 127.0.0.1）
+# Dify 仅本机 127.0.0.1:8080/8443，不对外。
+
+CHICKENSV_PUBLIC_PORT="${CHICKENSV_PUBLIC_PORT:-9800}"
+CHICKENSV_BACKEND_PORT="${CHICKENSV_BACKEND_PORT:-9801}"
+CHICKENSV_MCP_PORT="${CHICKENSV_MCP_PORT:-9802}"
+
+export CHICKENSV_PUBLIC_PORT CHICKENSV_BACKEND_PORT CHICKENSV_MCP_PORT
+
+FRONTEND_PORT="${FRONTEND_PORT:-${CHICKENSV_PUBLIC_PORT}}"
+BACKEND_PORT="${BACKEND_PORT:-${CHICKENSV_BACKEND_PORT}}"
+MCP_PORT="${MCP_PORT:-${CHICKENSV_MCP_PORT}}"
+
+export FRONTEND_PORT BACKEND_PORT MCP_PORT

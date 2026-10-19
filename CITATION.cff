@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use ChickenSVA or the CCRP, please cite the manuscript and this repository."
+title: "ChickenSVA: An AI-powered genomic knowledge agent for structural variant imputation and interpretation in the chicken genome"
+authors:
+  - family-names: Gao
+    given-names: Chaoqun
+  - name: "and co-authors (see manuscript)"
+type: software
+repository-code: "https://github.com/goodcqzz/ChickenSVA"
+abstract: >-
+  ChickenSVA combines a comprehensive chicken reference panel (CCRP; 2,063
+  genomes, 78 global populations) with an LLM-driven agent for natural-language
+  SV query, annotation, trait-association analysis, and Beagle-based SV
+  genotype imputation.
+keywords:
+  - structural variation
+  - chicken genomics
+  - LLM agent
+  - genotype imputation
+  - pangenome
+license: MIT
