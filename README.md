@@ -129,9 +129,18 @@ bash run_demo.sh     # SV query + annotation + a toy imputation, end-to-end
 
 See `examples/README.md` for inputs and expected outputs.
 
-## Full data release (CCRP)
+## Data bundled vs. full data release
 
-The complete reference panel, SV callset, and imputation panels (≈ 9 GB) are deposited at **Zenodo: [DOI pending]**. A one-command download script (`scripts/download_ccrp.sh`) will be added to this repository once the DOI is issued.
+**Bundled in this repository (~24 MB)**: the SV frequency table across 78 breeds
+(`data/2063_SV_frq.csv`) and the breed phenotype table (`data/鸡种表型-2024.csv`).
+With these, SV query, annotation lookup against cached gene info, breed profiles,
+and association analyses work out of the box after deployment.
+
+**Full data release (Zenodo, [DOI pending])**, needed only for specific features:
+the genome annotation GFF3 (~228 MB, required for `query_annotation` on the
+genome file), and the complete imputation reference panels (~9 GB, required for
+SV genotype imputation). A one-command download script
+(`scripts/download_ccrp.sh`) will be added once the DOI is issued.
 
 ## Repository layout
 

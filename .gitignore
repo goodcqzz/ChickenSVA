@@ -52,6 +52,9 @@ refpanel/beagle.jar
 annotation/*.gff3
 data/*.csv
 data/*.tsv
+# 核心数据放行：SV 频率表与品种表型表（平台开箱即用所需，~24MB）
+!data/2063_SV_frq.csv
+!data/鸡种表型-2024.csv
 gwas_body_weight_all.tsv
 
 # 上传/输出临时目录
