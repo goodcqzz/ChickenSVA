@@ -17,6 +17,8 @@ services:
       context: .
       dockerfile: deploy/docker/Dockerfile.mcp
     restart: unless-stopped
+    environment:
+      CHICKENSV_ROOT: /srv/chickensv
     volumes:
       - workspaces:/srv/chickensv/agent_framework/data
       # - ./refpanel/beagle.jar:/srv/chickensv/refpanel/beagle.jar:ro
@@ -34,6 +36,8 @@ services:
     environment:
       # 容器网络内经服务名访问 MCP（覆盖 env 文件里的 127.0.0.1）
       MCP_SERVER_URL: http://mcp:9802
+      # 固定安装根（优先级高于 env_file，防 example 里的占位符路径进容器）
+      CHICKENSV_ROOT: /srv/chickensv
       HOST: 0.0.0.0
       PORT: "9801"
     volumes:
