@@ -80,17 +80,29 @@ docker compose up -d --build
 # API health:  http://127.0.0.1:9800/api/v1/health
 ```
 
-### Option B — Conda
+### Option B — Conda (Linux / WSL2)
+
+> Requires Linux. On Windows, run inside **WSL2** (Ubuntu): the stack uses bash
+> services and `pysam`, which has no native Windows wheels.
 
 ```bash
 git clone https://github.com/goodcqzz/ChickenSVA.git
 cd ChickenSVA
-bash setup-env.sh                       # conda env "gaoai" from environment.yml (Python 3.11)
+bash setup-env.sh                       # finds/creates conda env "gaoai" (Python 3.11) and pip-installs all dependencies
 cp config/chickensv.env.example config/chickensv.env   # set your LLM API key
 cd agent_framework/frontend && npm install && npm run build && cd ../..
-bash start.sh --backend                 # starts MCP (:9802) + backend (:9801), localhost only
-# open http://127.0.0.1:9800 — or put Nginx in front for production (see deploy/)
+bash start.sh --prod                    # MCP (:9802) + backend (:9801) + web entry (:9800)
+# open http://127.0.0.1:9800  (inside WSL2 this also works from the Windows browser)
 ```
+
+Notes:
+- `bash start.sh --prod` starts all three services with the built `dist/` served
+  on :9800 via a bundled lightweight proxy (no root/Nginx needed). For
+  hot-reload development use `bash start.sh --dev` instead (Vite dev server).
+- `bash start.sh --backend` starts only MCP + backend with **no** web entry —
+  use it when you put your own Nginx in front (see `deploy/`).
+- `bash setup-env.sh --check` verifies the environment (python, uvicorn,
+  bcftools).
 
 Utilities: `bash start.sh --status` (status), `bash stop.sh` (stop app services; never touches system Nginx), `bash setup-production.sh` (systemd + Nginx installation for servers).
 
